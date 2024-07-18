@@ -6,9 +6,9 @@ function delayAlert() {
         console.log(p + " : 0" + g);
     else
         console.log(p + " : " + g);
-    g--;
+    g--;    
     if (g < 0) {
-        g = 59;
+        g = 59; 
         p--;
     }
     if (p < 0) {
