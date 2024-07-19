@@ -1,0 +1,10 @@
+#fan{
+    width: 10rem;
+    height: 10rem;
+    background-origin: center;
+    margin: 3rem;
+}
+#fan img{
+    width: 100%;
+    height: 100%;
+}
