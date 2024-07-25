@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/menu.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <a href="#" onclick="showLoginForm(event)">Form Login</a>
+        <div class="login-container ">
+            <span class="close-btn" onclick="hideLoginForm()">&times;</span>
+            <div class="login-header">
+                <h2>SIGN IN</h2>
+                <div class="underline"></div>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> email address</label>
+                    <input type="email" class="form-control" id="email" placeholder="email address">
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> password</label>
+                    <input type="password" class="form-control" id="password" placeholder="password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-signin">SIGN IN</button>
+                <div class="forgot-password">
+                    <a href="#">Forgot your password?</a>
+                </div>
+            </form>
+            <div class="create-account">
+                <button class="btn btn-create">CREATE AN ACCOUNT</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // function openSubmenu(e) {
+        //     hideSubmenu();
+        //     var sub = e.lastElementChild;
+        //     sub.style.display = "block";
+        // }
+        // function hideSubmenu() {
+        //     var subs = document.getElementsByClassName('submenu');
+        //     for (var s of subs) {
+        //         s.style.display = "none";
+        //     }
+        // }
+        function showLoginForm(event) {
+            event.preventDefault();
+            document.querySelector('.login-container').style.display = 'block';
+        }
+        function hideLoginForm() {
+            document.querySelector('.login-container').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>
