@@ -30,10 +30,12 @@
                 <div class="form-group">
                     <label for="email"><i class="fas fa-envelope"></i> email address</label>
                     <input type="email" class="form-control" id="email" placeholder="email address">
+                    <span id="email-error" class="error-message"></span>
                 </div>
                 <div class="form-group">
                     <label for="password"><i class="fas fa-lock"></i> password</label>
                     <input type="password" class="form-control" id="password" placeholder="password">
+                    <span id="password-error" class="error-message"></span>
                 </div>
                 <button type="submit" class="btn btn-primary btn-signin">SIGN IN</button>
                 <div class="forgot-password">
@@ -45,6 +47,11 @@
             </div>
         </div>
     </div>
+
+    <!-- <input type="text" placeholder="Enter..." id="ipx" 
+           onkeydown="enterKeyDown()"
+           onkeyup="enterKeyUp()" 
+    /> -->
 
 <script src="index.js"></script>        
 </body>
