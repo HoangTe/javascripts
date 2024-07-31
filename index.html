@@ -18,7 +18,7 @@
 
     <script type="text/javascript" src="./index.js"></script> -->
 
-    <div class="container">
+    <!-- <div class="container">
         <a href="#" onclick="showLoginForm(event)">Form Login</a>
         <div class="login-container ">
             <span class="close-btn" onclick="hideLoginForm()">&times;</span>
@@ -46,12 +46,44 @@
                 <button class="btn btn-create">CREATE AN ACCOUNT</button>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- <input type="text" placeholder="Enter..." id="ipx" 
            onkeydown="enterKeyDown()"
            onkeyup="enterKeyUp()" 
     /> -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-4 mb-5">
+                <input onkeyup="searchProduct(this)" type="text" class="form-control" name="search" placeholder="Search..."/>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-2">
+        <label for="product-limit">Số lượng mỗi trang</label>
+        <select name="limit" id="product-limit">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+        </select>
+    </div>
+    <div class="col-4">
+        <label for="product-sort">Sắp xếp</label>
+        <select name="sort" id="product-sort">
+            <option value="asc">Giá từ thấp đến cao</option>
+            <option value="desc">Giá từ cao đến thâp</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <div class="row" id="list-products">
+            
+        </div>
+    </div>
+
+
 
 <script src="index.js"></script>        
 </body>
