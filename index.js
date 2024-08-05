@@ -82,59 +82,90 @@
 //     }
 // })
 
-var url = `https://dummyjson.com/products`;
-fetch(url).then(function(rs){
-    return rs.json();
-})
-.then(function(rs){
-    var products = rs.products;
-    var list = document.getElementById("list-products");
-    for(var p of products){
-        var p_html = `<div class="col-3 mb-3">
-                    <div class="card" style="width: 18rem;">
-                        <img src="${p.thumbnail}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">${p.title}</h5>
-                          <h6 class="card-title">${p.price}</h6>
-                          <p class="card-text">${p.description}</p>
-                          <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                      </div>
-                </div>`;
-        list.innerHTML += p_html;
-    }    
-})
+// var url = `https://dummyjson.com/products`;
+// fetch(url).then(function(rs){
+//     return rs.json();
+// })
+// .then(function(rs){
+//     var products = rs.products;
+//     var list = document.getElementById("list-products");
+//     for(var p of products){
+//         var p_html = `<div class="col-3 mb-3">
+//                     <div class="card" style="width: 18rem;">
+//                         <img src="${p.thumbnail}" class="card-img-top" alt="...">
+//                         <div class="card-body">
+//                           <h5 class="card-title">${p.title}</h5>
+//                           <h6 class="card-title">${p.price}</h6>
+//                           <p class="card-text">${p.description}</p>
+//                           <a href="#" class="btn btn-primary">Go somewhere</a>
+//                         </div>
+//                       </div>
+//                 </div>`;
+//         list.innerHTML += p_html;
+//     }    
+// })
 
-function searchProduct(e) {
-    if(event.key === "Enter" || e.id === "product-limit" || e.id === "product-sort"){
-        var keyword = e.value;
-        var limit = document.getElementById("product-limit").value; 
-        var sort = document.getElementById("product-sort").value; 
-        var url_search = `https://dummyjson.com/products/search?q=${keyword}&limit=${limit}&sortBy=price&order=${sort}`;
-        fetch(url_search)
-        .then(function(rs) {
-            return rs.json();
-        })
-        .then(function(rs) {
-            var products = rs.products;
-            var list = document.getElementById("list-products");
-            list.innerHTML = "";
+// function searchProduct(e) {
+//     if(event.key === "Enter" || e.id === "product-limit" || e.id === "product-sort"){
+//         var keyword = e.value;
+//         var limit = document.getElementById("product-limit").value; 
+//         var sort = document.getElementById("product-sort").value; 
+//         var url_search = `https://dummyjson.com/products/search?q=${keyword}&limit=${limit}&sortBy=price&order=${sort}`;
+//         fetch(url_search)
+//         .then(function(rs) {
+//             return rs.json();
+//         })
+//         .then(function(rs) {
+//             var products = rs.products;
+//             var list = document.getElementById("list-products");
+//             list.innerHTML = "";
 
-            for (var p of products) {
-                var p_html = `<div class="col-3 mb-3">
-                                <div class="card" style="width: 18rem;">
-                                    <img src="${p.thumbnail}" class="card-img-top" alt="...">
-                                        <div class="card-body">
-                                            <h5 class="card-title">${p.title}</h5>
-                                            <h6 class="card-title">${p.price}</h6>
-                                            <p class="card-text">${p.description}</p>
-                                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                                        </div>
-                                    </div>
-                                </div>`;
-                list.innerHTML += p_html;
-            }
+//             for (var p of products) {
+//                 var p_html = `<div class="col-3 mb-3">
+//                                 <div class="card" style="width: 18rem;">
+//                                     <img src="${p.thumbnail}" class="card-img-top" alt="...">
+//                                         <div class="card-body">
+//                                             <h5 class="card-title">${p.title}</h5>
+//                                             <h6 class="card-title">${p.price}</h6>
+//                                             <p class="card-text">${p.description}</p>
+//                                             <a href="#" class="btn btn-primary">Go somewhere</a>
+//                                         </div>
+//                                     </div>
+//                                 </div>`;
+//                 list.innerHTML += p_html;
+//             }
+//         });
+//     }
+// }
+
+const apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=Hanoi&appid=09a71427c59d38d6a34f89b47d75975c&units=metric';
+
+async function getWeatherForecast() {
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        const weatherContainer = document.getElementById('weather');
+        data.list.forEach(item => {
+            const dateTime = new Date(item.dt * 1000);
+            const temperature = Math.round(item.main.temp);
+            const weatherIcon = item.weather[0].icon;
+            const weatherDescription = item.weather[0].description;
+
+            const forecastItem = document.createElement('div');
+            forecastItem.classList.add('weather-card');
+            forecastItem.innerHTML = `
+                <p class="date-time">${dateTime.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false })}</p>
+                <p class="temperature">${temperature}°C</p>
+                <img src="https://openweathermap.org/img/w/${weatherIcon}.png" alt="Weather icon" class="weather-icon">
+                <p class="weather-description">${weatherDescription}</p>
+            `;
+
+            weatherContainer.appendChild(forecastItem);
         });
+    } catch (error) {
+        console.error('Error fetching weather data:', error);
     }
 }
 
+getWeatherForecast();
