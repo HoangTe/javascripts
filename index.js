@@ -1,171 +1,138 @@
+// setTimeout(function(){ // call back function
 
-// function openSubmenu(e) {
-//     hideSubmenu();
-//     var sub = e.lastElementChild;
-//     sub.style.display = "block";
-// }
-// function hideSubmenu() {
-//     var subs = document.getElementsByClassName('submenu');
-//     for (var s of subs) {
-//         s.style.display = "none";
-//     }
-// }
+        // },1000);
 
-// function showLoginForm(event) {
-//     event.preventDefault();
-//     document.querySelector('.login-container').style.display = 'block';
-// }
-// function hideLoginForm() {
-//     document.querySelector('.login-container').style.display = 'none';
-// }
+        // URL -> chứa data cần dùng dạng JSON  -> Rest api (HTTP Service) 
+        // có 2 cách: 1- sử dụng callback function   cách 2- sử dụng xử lý bất đồng bộ
+        // step 1: call api --> get data
+        var url = `https://dummyjson.com/products/category-list`;
+        fetch(url).then(function(rs){
+            return rs.json(); // chuyển dữ liệu nhận được thành dạng JSON
+        })
+        .then(function(rs){
+            console.log(rs); // đã nhận được data là 1 array 24 string
+        // step 2: using data --> render html
+            var menu = document.getElementById("menu"); // list rendering
+            for(var item of rs){
+                var item_html = `<li class="item">
+                                    <a href="#">${item}</a>
+                                </li>`;
+                menu.innerHTML += item_html;
+            }
+        })
 
-// // function enterKeyDown(){
-// //     var ipx = document.getElementById("ipx");
-// //     var v = ipx.value;
-// //     console.log(`Key down...:${v}`);
-// // }
-// // function enterKeyUp(e){
-// //     var v = e.value;
-// //     console.log(`Key up...:${v}`);
-// //     if(Event.keyCode == 13 && v.length < 6){
-// //         var msg = document.getElementById('msg');
-// //         msg.innerText = "Nhập tối thiểu 6 kí tự";
-// //         msg.style.display='block';
-// //     }
-// // }
+        // Render products list
+        var url2 = `https://dummyjson.com/products`;
+        // step 1
+        fetch(url2).then(function(rs){
+            return rs.json();
+        })
+        .then(function(rs){
+            var products = rs.products;
+            var list = document.getElementById("list-products");
+            for(var p of products){
+                var p_html = `<div class="col-3 mb-3">
+                    <div class="card" style="width: 18rem;">
+                        <img src="${p.thumbnail}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">${p.title}</h5>
+                          <p class="card-text">${p.description}</p>
+                          <a href="#" onclick="addToCart(${p.id})" class="btn btn-primary">Add to cart</a>
+                        </div>
+                      </div>
+                </div>`;
+                list.innerHTML += p_html;
+            }
+        })
 
-// const emailInput = document.getElementById('email');
-// const emailError = document.getElementById('email-error');
-// const passwordInput = document.getElementById('password');
-// const passwordError = document.getElementById('password-error');
-// emailInput.addEventListener('input', validateEmail);
-// passwordInput.addEventListener('input', validatePassword);
+        function searchProduct(e){
+            if(event.keyCode == 13){ // kiểm tra xem người dùng nhấn phím enter (13)
+                var keyword = e.value;
+                // var url_search = `https://dummyjson.com/products/search?q=${keyword}`;
+                var limit = document.getElementById("select-limit").value;
+                var sort = document.getElementById("select-sort").value;
+                url_search = `https://dummyjson.com/products/search?q=${keyword}&limit=${limit}&sortBy=price&order=${sort}`;
+                fetch(url_search).then(function(rs){
+                    return rs.json();
+                })
+                .then(function(rs){
+                    var products = rs.products;
+                    var list = document.getElementById("list-products");
+                    list.innerHTML = ``;// clear list
+                    for(var p of products){
+                        var p_html = `<div class="col-3 mb-3">
+                            <div class="card" style="width: 18rem;">
+                                <img src="${p.thumbnail}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                <h5 class="card-title">${p.title}</h5>
+                                <p class="card-text">${p.description}</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div>`;
+                        list.innerHTML += p_html;
+                    }
+                })
+            }
+            
+            // xây dựng chức năng tìm kiếm sản phẩm
+        }
 
-// function validateEmail(){
-//     const email = emailInput.value;
-//     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-//     if (!emailRegex.test(email)) {
-//         emailError.textContent = "Invalid email format";
-//         emailError.style.color = "red";
-//     } else {
-//         emailError.textContent = "Exaclly";
-//         emailError.style.color = "green";
-//     }
-// }
-
-// function validatePassword(){
-//     const password = passwordInput.value;
-//     if(password.length < 6){
-//         passwordError.textContent = "Password must be at least 6 characters";
-//         passwordError.style.color = 'red';
-//     }else{
-//         passwordError.textContent = "Exaclly";
-//         passwordError.style.color = 'green';
-//     }
-
-// }
-
-
-
-// var url = `https://dummyjson.com/products/category-list`;
-// fetch(url).then(function(rs){
-//     return rs.json();
-// })
-// .then(function(rs){
-//     console.log(rs);
-//     var menu = document.getElementById("menu");
-//     for(var item of rs){
-//         var item_html = `<li class="item">
-//                             <a href="#">${item}</a>
-//                         </li>`;
-//         menu.innerHTML += item_html;
-//     }
-// })
-
-// var url = `https://dummyjson.com/products`;
-// fetch(url).then(function(rs){
-//     return rs.json();
-// })
-// .then(function(rs){
-//     var products = rs.products;
-//     var list = document.getElementById("list-products");
-//     for(var p of products){
-//         var p_html = `<div class="col-3 mb-3">
-//                     <div class="card" style="width: 18rem;">
-//                         <img src="${p.thumbnail}" class="card-img-top" alt="...">
-//                         <div class="card-body">
-//                           <h5 class="card-title">${p.title}</h5>
-//                           <h6 class="card-title">${p.price}</h6>
-//                           <p class="card-text">${p.description}</p>
-//                           <a href="#" class="btn btn-primary">Go somewhere</a>
-//                         </div>
-//                       </div>
-//                 </div>`;
-//         list.innerHTML += p_html;
-//     }    
-// })
-
-// function searchProduct(e) {
-//     if(event.key === "Enter" || e.id === "product-limit" || e.id === "product-sort"){
-//         var keyword = e.value;
-//         var limit = document.getElementById("product-limit").value; 
-//         var sort = document.getElementById("product-sort").value; 
-//         var url_search = `https://dummyjson.com/products/search?q=${keyword}&limit=${limit}&sortBy=price&order=${sort}`;
-//         fetch(url_search)
-//         .then(function(rs) {
-//             return rs.json();
-//         })
-//         .then(function(rs) {
-//             var products = rs.products;
-//             var list = document.getElementById("list-products");
-//             list.innerHTML = "";
-
-//             for (var p of products) {
-//                 var p_html = `<div class="col-3 mb-3">
-//                                 <div class="card" style="width: 18rem;">
-//                                     <img src="${p.thumbnail}" class="card-img-top" alt="...">
-//                                         <div class="card-body">
-//                                             <h5 class="card-title">${p.title}</h5>
-//                                             <h6 class="card-title">${p.price}</h6>
-//                                             <p class="card-text">${p.description}</p>
-//                                             <a href="#" class="btn btn-primary">Go somewhere</a>
-//                                         </div>
-//                                     </div>
-//                                 </div>`;
-//                 list.innerHTML += p_html;
-//             }
-//         });
-//     }
-// }
-
-const apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=Hanoi&appid=09a71427c59d38d6a34f89b47d75975c&units=metric';
-
-async function getWeatherForecast() {
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        const weatherContainer = document.getElementById('weather');
-        data.list.forEach(item => {
-            const dateTime = new Date(item.dt * 1000);
-            const temperature = Math.round(item.main.temp);
-            const weatherIcon = item.weather[0].icon;
-            const weatherDescription = item.weather[0].description;
-
-            const forecastItem = document.createElement('div');
-            forecastItem.classList.add('weather-card');
-            forecastItem.innerHTML = `
-                <p class="date-time">${dateTime.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false })}</p>
-                <p class="temperature">${temperature}°C</p>
-                <img src="https://openweathermap.org/img/w/${weatherIcon}.png" alt="Weather icon" class="weather-icon">
-                <p class="weather-description">${weatherDescription}</p>
-            `;
-
-            weatherContainer.appendChild(forecastItem);
-        });
-    } catch (error) {
-        console.error('Error fetching weather data:', error);
-    }
-}
-
-getWeatherForecast();
+        // product of category
+     //   url = `https://dummyjson.com/products/category/beauty`;
+        // sort and limit
+        function filter(){
+            var search = document.getElementById("input-search").value;
+            var limit = document.getElementById("select-limit").value;
+            var sort = document.getElementById("select-sort").value;
+            url3 = `https://dummyjson.com/products/search?q=${search}&limit=${limit}&sortBy=price&order=${sort}`;
+            fetch(url3).then(function(rs){
+                    return rs.json();
+                })
+                .then(function(rs){
+                    var products = rs.products;
+                    var list = document.getElementById("list-products");
+                    list.innerHTML = ``;// clear list
+                    for(var p of products){
+                        var p_html = `<div class="col-3 mb-3">
+                            <div class="card" style="width: 18rem;">
+                                <img src="${p.thumbnail}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                <h5 class="card-title">${p.title}</h5>
+                                <p class="card-text">${p.description}</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div>`;
+                        list.innerHTML += p_html;
+                    }
+                })
+        }
+        
+        async function addToCart(id){
+            const url = `https://dummyjson.com/products/${id}`;
+            var rs = await fetch(url);
+            var data = await rs.json(); // lấy về dc 1 sản phẩm
+            var product = {
+                id: id,
+                title: data.title,
+                thumbnail: data.thumbnail,
+                price: data.price,
+                buyQty: 1
+            }
+            var cart = localStorage.getItem("cart"); // "[{id:...,title:...}]"
+            if(cart == null){
+                cart= [];
+            }else{
+                cart = JSON.parse(cart);
+            }
+            cart.push(product); // array
+            // console.log(cart);
+            cart = JSON.stringify(cart);// convert to string
+            // console.log(cart);
+            localStorage.setItem("cart",cart);
+        }
+        
+      //  localStorage.setItem("demo","ABC123");
+    //   var demo = localStorage.getItem("demo");
+    //   console.log(demo);

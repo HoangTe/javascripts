@@ -10,78 +10,49 @@
 </head>
 
 <body>
-    <!-- <div class="container">
-        <a href="#" onclick="showLoginForm(event)">Form Login</a>
-        <div class="login-container ">
-            <span class="close-btn" onclick="hideLoginForm()">&times;</span>
-            <div class="login-header">
-                <h2>SIGN IN</h2>
-                <div class="underline"></div>
-            </div>
-            <form>
-                <div class="form-group">
-                    <label for="email"><i class="fas fa-envelope"></i> email address</label>
-                    <input type="email" class="form-control" id="email" placeholder="email address">
-                    <span id="email-error" class="error-message"></span>
+    <header>
+        <div class="container">
+
+        </div>
+    </header>
+    <!-- <nav class="navbar">
+        <div class="container">
+            <ul class="menu" id="menu">
+
+            </ul>
+        </div>
+    </nav> -->
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-4 mb-5">
+                    <input id="input-search" onkeyup="searchProduct(this)" class="form-control" type="text" name="search" placeholder="Search...."/>
                 </div>
-                <div class="form-group">
-                    <label for="password"><i class="fas fa-lock"></i> password</label>
-                    <input type="password" class="form-control" id="password" placeholder="password">
-                    <span id="password-error" class="error-message"></span>
+                <div class="col-2">
+                    <label>Số lượng mỗi trang</label>
+                    <select id="select-limit" name="limit" onchange="filter()">
+                        <option value="12">12</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                    </select>
                 </div>
-                <button type="submit" class="btn btn-primary btn-signin">SIGN IN</button>
-                <div class="forgot-password">
-                    <a href="#">Forgot your password?</a>
+                <div class="col-4">
+                    <label>Sắp xếp</label>
+                    <select id="select-sort" name="sort" onchange="filter()">
+                        <option value="asc">Giá từ thấp đến cao</option>
+                        <option value="desc">Giá từ cao đến thâp</option>
+                    
+                    </select>
                 </div>
-            </form>
-            <div class="create-account">
-                <button class="btn btn-create">CREATE AN ACCOUNT</button>
             </div>
         </div>
-    </div> -->
-
-    <!-- <input type="text" placeholder="Enter..." id="ipx" 
-           onkeydown="enterKeyDown()"
-           onkeyup="enterKeyUp()" 
-    /> -->
-
-    <!-- <div class="container">
-        <div class="row">
-            <div class="col-4 mb-5">
-                <input onkeyup="searchProduct(this)" type="text" class="form-control" name="search" placeholder="Search..."/>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-2">
-        <label for="product-limit">Số lượng mỗi trang</label>
-        <select name="limit" id="product-limit">
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-        </select>
-    </div>
-    <div class="col-4">
-        <label for="product-sort">Sắp xếp</label>
-        <select name="sort" id="product-sort">
-            <option value="asc">Giá từ thấp đến cao</option>
-            <option value="desc">Giá từ cao đến thâp</option>
-        </select>
-    </div>
-
-    <div class="container">
-        <div class="row" id="list-products">
+        <div class="container">
+            <div class="row" id="list-products">
+                
             
+            </div>
         </div>
-    </div> -->
-
-    <div class="container">
-        <div class="weather-grid" id="weather">
-            
-        </div>
-    </div>
-
-    
+    </main>
 
 <script src="index.js"></script>        
 </body>
